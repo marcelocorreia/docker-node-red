@@ -33,10 +33,7 @@ RUN npm install -g node-red-contrib-soapserver
 RUN npm install -g node-red-contrib-slack
 RUN npm install -g nodegit
 
-
 RUN mkdir /opt/node-red
-RUN mkdir /opt/cerb-pipeline
-RUN echo "export PATH=$PATH:/opt/cerb-pipeline" > /root/.bashrc
-RUN echo "export PATH=$PATH:/opt/cerb-helper/" > /root/.bashrc
+
 EXPOSE 1880
 CMD node-red -u /opt/node-red
