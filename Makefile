@@ -1,12 +1,12 @@
 OUTPUT=nodered
 pipeline-update:
 	fly -t main set-pipeline \
-		-n -p docker-nginx \
+		-n -p $(OUTPUT) \
 		-c cicd/pipelines/pipeline.yml \
 		-l /home/marcelo/.ssh/ci-credentials.yml \
-		-v git_repo_url=git@github.com:marcelocorreia/nodered.git \
-        -v container_fullname=marcelocorreia/nodered \
-        -v container_name=nodered
+		-v git_repo_url=git@github.com:marcelocorreia/$(OUTPUT).git \
+        -v container_fullname=marcelocorreia/$(OUTPUT) \
+        -v container_name=$(OUTPUT)
 
-	fly -t main unpause-pipeline -p docker-nodered
+	fly -t main unpause-pipeline -p $(OUTPUT)
 
