@@ -1,8 +1,7 @@
 FROM mhart/alpine-node
 MAINTAINER Marcelo Correia <marcelo.correia@starvisitor.com>
 
-RUN apk
-
+RUN apk add --update python
 RUN npm install -g --unsafe-perm node-red
 RUN npm install -g node-red-node-serialport
 RUN npm install -g node-red-contrib-cron
