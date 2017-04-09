@@ -1,12 +1,7 @@
-FROM debian:jessie-slim
+FROM mhart/alpine-node
 MAINTAINER Marcelo Correia <marcelo.correia@starvisitor.com>
 
-RUN apt-get update -y
-RUN apt-get install curl git -y
-RUN apt-get install build-essential libssl-dev -y
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
-RUN apt-get install -y nodejs mysql-client net-tools
-RUN echo "Installing deps"
+RUN apk
 
 RUN npm install -g --unsafe-perm node-red
 RUN npm install -g node-red-node-serialport
@@ -33,7 +28,7 @@ RUN npm install -g node-red-contrib-soapserver
 RUN npm install -g node-red-contrib-slack
 RUN npm install -g nodegit
 
-RUN mkdir /opt/node-red
+RUN mkdir /node-red
 
 EXPOSE 1880
-CMD node-red -u /opt/node-red
+CMD node-red -u /node-red
