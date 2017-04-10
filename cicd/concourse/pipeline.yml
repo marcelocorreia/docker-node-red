@@ -42,11 +42,17 @@ jobs:
       - get: git_repo
         trigger: true
       - put: resource_version
-        params: {bump: patch}
+        params:
+          bump: patch
       - put: docker_image
-        params: {build: docker_image, tag: resource_version/version, tag_as_latest: true }
+        params:
+          build: docker_image
+          tag: resource_version/version
+          tag_as_latest: true
+          dockerfile: git_repo/Dockerfile
       - put: resource_version
-        params: {file: resource_version/version}
+        params:
+          file: resource_version/version
       - put: github-release
         params:
           name: resource_version/version
