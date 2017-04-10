@@ -6,7 +6,7 @@ resources:
       branch: {{git_branch}}
       private_key: {{git_private_key}}
       username: {{github_user}}
-      cache: true
+
 
   - name: docker_image
     type: docker-image
@@ -15,6 +15,7 @@ resources:
       email: {{docker_mail}}
       username: {{docker_user}}
       password: {{docker_password}}
+      cache: true
 
   - name: resource_version
     type: semver
