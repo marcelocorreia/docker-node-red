@@ -43,7 +43,7 @@ jobs:
       - put: resource_version
         params: {bump: patch}
       - put: docker_image
-        params: {build: dockerfile, tag: resource_version/version,tag_as_latest: true }
+        params: {build: docker_image, tag: resource_version/version, tag_as_latest: true }
       - put: resource_version
         params: {file: resource_version/version}
       - put: github-release
