@@ -12,7 +12,7 @@ resources:
     type: git
     source:
       uri: {{git_repo_url}}
-      branch: git_branch
+      branch: {{git_branch}}
       private_key: {{git_private_key}}
       username: {{github_user}}
 
