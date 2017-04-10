@@ -7,7 +7,6 @@ RUN apt-get install build-essential libssl-dev -y
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 RUN apt-get install -y nodejs mysql-client net-tools
 RUN echo "Installing deps"
-
 RUN npm install -g --unsafe-perm node-red
 RUN npm install -g node-red-node-serialport
 RUN npm install -g node-red-contrib-cron

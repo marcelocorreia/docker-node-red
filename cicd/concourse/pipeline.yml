@@ -1,12 +1,12 @@
 resources:
-  - name: git_repo
+  - name: dockerfile
     type: git
     source:
       uri: {{git_repo_url}}
-      branch: {{git_branch}}
+      branch: master
+      paths: [Dockerfile]
       private_key: {{git_private_key}}
       username: {{github_user}}
-
 
   - name: docker_image
     type: docker-image
@@ -28,7 +28,7 @@ resources:
       private_key: {{git_private_key}}
       username: {{github_user}}
 
-  - name: github-release
+  - name: github_release
     type: github-release
     source:
       user: {{github_user}}
@@ -39,7 +39,7 @@ jobs:
   - name: {{container_name}}
     serial: true
     plan:
-      - get: git_repo
+      - get: dockerfile
         trigger: true
       - put: resource_version
         params:
@@ -49,11 +49,11 @@ jobs:
           build: docker_image
           tag: resource_version/version
           tag_as_latest: true
-          dockerfile: git_repo/Dockerfile
+          dockerfile: dockerfile
       - put: resource_version
         params:
           file: resource_version/version
-      - put: github-release
+      - put: github_release
         params:
           name: resource_version/version
           tag: resource_version/version
