@@ -35,7 +35,7 @@ resources:
       access_token: {{github_token}}
 
 jobs:
-  - name: {{container_name}}
+  - name: docker-nodered-release
     serial: true
     plan:
       - get: docker-repo
