@@ -11,7 +11,7 @@ pipeline:
         -v container_name=$(CONTAINER) \
         -v git_branch=master
 
-	fly -t dev unpause-pipeline -p $(CONTAINER)
+	fly -t dev unpause-pipeline -p docker-$(CONTAINER)
 .PHONY: pipeline
 
 build:
