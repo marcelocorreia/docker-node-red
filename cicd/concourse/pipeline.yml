@@ -45,10 +45,9 @@ jobs:
           bump: patch
       - put: docker-image
         params:
-          build: docker-image
+          build: docker-repo
           tag: resource-version/version
           tag_as_latest: true
-          dockerfile : docker-repo/Dockerfile
       - put: resource-version
         params:
           file: resource-version/version
