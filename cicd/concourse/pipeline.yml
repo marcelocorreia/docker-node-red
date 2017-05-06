@@ -8,7 +8,7 @@ resources:
       private_key: {{git_private_key}}
       username: {{github_user}}
 
-  - name: docker_image
+  - name: docker-image
     type: docker-image
     source:
       repository: {{container_fullname}}
@@ -17,7 +17,7 @@ resources:
       password: {{docker_password}}
       cache: true
 
-  - name: resource_version
+  - name: resource-version
     type: semver
     source:
       driver: git
@@ -28,7 +28,7 @@ resources:
       private_key: {{git_private_key}}
       username: {{github_user}}
 
-  - name: github_release
+  - name: github-release
     type: github-release
     source:
       user: {{github_user}}
@@ -41,19 +41,19 @@ jobs:
     plan:
       - get: dockerfile
         trigger: true
-      - put: resource_version
+      - put: resource-version
         params:
           bump: patch
-      - put: docker_image
+      - put: docker-image
         params:
-          build: docker_image
-          tag: resource_version/version
+          build: docker-image
+          tag: resource-version/version
           tag_as_latest: true
           dockerfile: dockerfile
-      - put: resource_version
+      - put: resource-version
         params:
-          file: resource_version/version
-      - put: github_release
+          file: resource-version/version
+      - put: github-release
         params:
-          name: resource_version/version
-          tag: resource_version/version
+          name: resource-version/version
+          tag: resource-version/version

@@ -2,16 +2,16 @@ CONTAINER=nodered
 NAMESPACE=marcelocorreia
 
 pipeline:
-	fly -t main set-pipeline \
-		-n -p $(CONTAINER) \
+	fly -t dev set-pipeline \
+		-n -p docker-$(CONTAINER) \
 		-c cicd/concourse/pipeline.yml \
-		-l /home/marcelo/.ssh/ci-credentials.yml \
+		-l /Users/marcelo/.ssh/ci-credentials.yml \
 		-v git_repo_url=git@github.com:$(NAMESPACE)/$(CONTAINER).git \
         -v container_fullname=$(NAMESPACE)/$(CONTAINER) \
         -v container_name=$(CONTAINER) \
         -v git_branch=master
 
-	fly -t main unpause-pipeline -p $(CONTAINER)
+	fly -t dev unpause-pipeline -p $(CONTAINER)
 .PHONY: pipeline
 
 build:
