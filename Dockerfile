@@ -33,7 +33,6 @@ RUN npm install -g node-red-contrib-slack
 RUN npm install -g nodegit
 
 RUN mkdir /opt/node-red
-
 EXPOSE 1880
 
 CMD node-red -u /opt/node-red
