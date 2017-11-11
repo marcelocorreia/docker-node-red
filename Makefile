@@ -1,7 +1,10 @@
 CONTAINER=nodered
 NAMESPACE=marcelocorreia
 
-pipeline:
+git-push:
+	git add .; git commit -m "Pipeline WIP"; git push
+
+pipeline: git-push
 	fly -t dev set-pipeline \
 		-n -p docker-$(CONTAINER) \
 		-c cicd/concourse/pipeline.yml \
