@@ -17,7 +17,6 @@ RUN npm install -g node-red-contrib-google
 RUN npm install -g node-red-contrib-mock
 RUN npm install -g node-red-contrib-os
 RUN npm install -g node-red-contrib-date
-RUN npm install -g node-red-contrib-hangouts
 RUN npm install -g node-red-node-mysql
 RUN npm install -g node-red-contrib-screenshot
 RUN npm install -g node-red-contrib-youtube
