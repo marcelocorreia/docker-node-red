@@ -1,6 +1,5 @@
 FROM debian:jessie-slim
-MAINTAINER Marcelo Correia <marcelo.correia@starvisitor.com>
-
+MAINTAINER marcelo correia <marcelo@correia.io>
 RUN apt-get update -y
 RUN apt-get install curl git -y
 RUN apt-get install build-essential libssl-dev -y
