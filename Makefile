@@ -1,27 +1,36 @@
-CONTAINER=nodered
-NAMESPACE=marcelocorreia
+NAME := node-red
+NAMESPACE := marcelocorreia
+VERSION := $(shell cat version)
+SOURCE_GITHUB_USER := node-red
+GITHUB_USER := marcelocorreia
 
-git-push:
-	git add .; git commit -m "Pipeline WIP"; git push
+ifdef GITHUB_TOKEN
+TOKEN_FLAG := -H "Authorization: token $(GITHUB_TOKEN)"
+endif
 
-pipeline: git-push
-	fly -t dev set-pipeline \
-		-n -p docker-$(CONTAINER) \
-		-c cicd/concourse/pipeline.yml \
-		-l /Users/marcelo/.ssh/ci-credentials.yml \
-		-v git_repo_url=git@github.com:$(NAMESPACE)/$(CONTAINER).git \
-        -v container_fullname=$(NAMESPACE)/$(CONTAINER) \
-        -v container_name=$(CONTAINER) \
-        -v git_branch=master
-
-	fly -t dev unpause-pipeline -p docker-$(CONTAINER)
-.PHONY: pipeline
-
-build:
-	docker build -t $(NAMESPACE)/$(CONTAINER) .
+build: _update-version
+	docker build -t $(NAMESPACE)/$(NAME) .
+	docker build -t $(NAMESPACE)/$(NAME):$(VERSION) .
 .PHONY: build
 
-run:
-	docker run --rm -p 1880:1880 $(NAMESPACE)/$(CONTAINER)
-.PHONY: run
+push:
+	docker push $(NAMESPACE)/$(NAME)
+	docker push $(NAMESPACE)/$(NAME):$(VERSION)
+
+release:
+	github-release release -u $(GITHUB_USER) -r $(REPO_NAME) --tag $(VERSION) --name $(VERSION)
+	$(make) build push
+
+_get-last-release:
+	@OUT=$(shell curl -s $(TOKEN_FLAG) https://api.github.com/repos/$(SOURCE_GITHUB_USER)/$(NAME)/tags | jq ".[]|.name" | head -n1 | sed 's/\"//g' | sed 's/v*//g') && \
+	echo $${OUT}
+
+_update-version:
+	cat Dockerfile | sed  "s/ARG $(NAME)_version=\".*\"/ARG $(NAME)_version=\"$(VERSION)\"/" > /tmp/Dockerfile.tmp
+	cat /tmp/Dockerfile.tmp > Dockerfile
+	rm /tmp/Dockerfile.tmp
+
+
+_git-push:
+	git add .; git commit -m "Image Version $(VERSION)"; git push
 
