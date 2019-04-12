@@ -1,8 +1,10 @@
 NAME := node-red
+GIT_REPO_NAME := docker-node-red
 NAMESPACE := marcelocorreia
 VERSION := $(shell cat version)
 SOURCE_GITHUB_USER := node-red
 GITHUB_USER := marcelocorreia
+SCAFOLD := badwolf
 
 ifdef GITHUB_TOKEN
 TOKEN_FLAG := -H "Authorization: token $(GITHUB_TOKEN)"
@@ -30,6 +32,12 @@ _update-version:
 	cat /tmp/Dockerfile.tmp > Dockerfile
 	rm /tmp/Dockerfile.tmp
 
+open-page:
+	open https://github.com/$(GITHUB_USER)/$(GIT_REPO_NAME).git
+
+_readme:
+	$(SCAFOLD) generate --resource-type readme .
+	$(call  git_push,Updating docs)
 
 _git-push:
 	git add .; git commit -m "Image Version $(VERSION)"; git push

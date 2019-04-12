@@ -1,11 +1,12 @@
-FROM debian:jessie-slim
+FROM marcelocorreia/base-node
 MAINTAINER marcelo correia <marcelo@correia.io>
 
-RUN apt-get update -y
-RUN apt-get install curl git -y
-RUN apt-get install build-essential libssl-dev -y
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
-RUN apt-get install -y nodejs mysql-client net-tools
+#RUN apt-get update -y
+#RUN apt-get install curl git -y
+#RUN apt-get install build-essential libssl-dev -y
+#RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+#RUN apt-get install -y nodejs mysql-client net-tools
+#
 
 RUN npm install -g --unsafe-perm node-red
 RUN npm install -g node-red-node-serialport
