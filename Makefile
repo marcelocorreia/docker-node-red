@@ -1,5 +1,5 @@
-NAME := nodered
-GIT_REPO_NAME := docker-nodered
+NAME := node-red
+GIT_REPO_NAME := docker-$(NAME)
 NAMESPACE := marcelocorreia
 VERSION := $(shell cat version)
 SOURCE_GITHUB_USER := node-red
