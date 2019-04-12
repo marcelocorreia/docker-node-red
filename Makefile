@@ -35,9 +35,9 @@ _update-version:
 open-page:
 	open https://github.com/$(GITHUB_USER)/$(GIT_REPO_NAME).git
 
-_readme: _git-push
+_readme:
 	$(SCAFOLD) generate --resource-type readme .
-
+	make _git-push
 
 _git-push:
 	git add .; git commit -m "Image Version $(VERSION)"; git push
