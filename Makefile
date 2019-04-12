@@ -15,13 +15,12 @@ build: _update-version
 	docker build -t $(NAMESPACE)/$(NAME):$(VERSION) .
 .PHONY: build
 
-push:
+push: build
 	docker push $(NAMESPACE)/$(NAME)
 	docker push $(NAMESPACE)/$(NAME):$(VERSION)
 
-release:
-	github-release release -u $(GITHUB_USER) -r $(REPO_NAME) --tag $(VERSION) --name $(VERSION)
-	$(make) build push
+release: push
+	github-release release -u $(GITHUB_USER) -r $(GIT_REPO_NAME) --tag $(VERSION) --name $(VERSION)
 
 _get-last-release:
 	@OUT=$(shell curl -s $(TOKEN_FLAG) https://api.github.com/repos/$(SOURCE_GITHUB_USER)/$(NAME)/tags | jq ".[]|.name" | head -n1 | sed 's/\"//g' | sed 's/v*//g') && \
@@ -37,8 +36,13 @@ open-page:
 
 _readme:
 	$(SCAFOLD) generate --resource-type readme .
-	make _git-push
+	$(call  git_push,Updating: $(VERSION))
 
 _git-push:
 	git add .; git commit -m "Image Version $(VERSION)"; git push
 
+define git_push
+	-git add .
+	-git commit -m "$1"
+	-git push
+endef
