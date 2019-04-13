@@ -10,7 +10,7 @@ ifdef GITHUB_TOKEN
 TOKEN_FLAG := -H "Authorization: token $(GITHUB_TOKEN)"
 endif
 
-build: _update-version
+build: _update-version _readme
 	docker build -t $(NAMESPACE)/$(NAME) .
 	docker build -t $(NAMESPACE)/$(NAME):$(VERSION) .
 .PHONY: build
