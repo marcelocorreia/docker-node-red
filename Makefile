@@ -4,13 +4,13 @@ NAMESPACE := marcelocorreia
 VERSION := $(shell cat version)
 SOURCE_GITHUB_USER := node-red
 GITHUB_USER := marcelocorreia
-SCAFOLD := badwolf
+SCAFOLD := hammer
 
 ifdef GITHUB_TOKEN
 TOKEN_FLAG := -H "Authorization: token $(GITHUB_TOKEN)"
 endif
 
-build: _update-version _readme
+build: _update-version
 	docker build -t $(NAMESPACE)/$(NAME) .
 	docker build -t $(NAMESPACE)/$(NAME):$(VERSION) .
 .PHONY: build
@@ -36,7 +36,7 @@ open-page:
 
 _readme:
 	$(SCAFOLD) generate --resource-type readme .
-	$(call  git_push,Updating: $(VERSION))
+#	$(call  git_push,Updating: $(VERSION))
 
 _git-push:
 	git add .; git commit -m "Image Version $(VERSION)"; git push
